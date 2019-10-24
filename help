@@ -1,0 +1,18 @@
+Lazygit Addon - Git repo menu v0.2
+
+USAGE:
+	Just run lg from anywhere. If you are currently in a git repo, lazygit
+	will launch. If you aren't, a menu of all your git repos will appear.
+
+REQUIRED:
+
+1.	$GITPATH needs to be set to the directory where all of your git repos
+	are saved.
+
+	To set $GITPATH, launch lg with the '--setgitpath' option.
+
+2.	System has to be set up to with SetupDX2
+
+
+
+

@@ -1,0 +1,47 @@
+__version__='0.3'
+declare -a GITDIRS=()
+PS3="""
+[00;01mEnter [00;01;38;5;46m[[00;01m#[00;01;38;5;46m][00;01m to open repo with [00;01;38;5;46mlazygit[00;01m, or hit [00;01;38;5;196m[[00;01mQ[00;01;38;5;196m][00;01m to [00;01;38;5;196mQuit[00m
+: """
+init=1
+
+clear
+if [ ! $GITPATH ]; then
+# 	builtin cd $GITPATH
+#else
+	echo -e """[00;01;38;5;196mERR[00;01m: \$GITPATH is [00;01;38;5;196mnot[00;01m set!
+
+[mRun [00;01;38;5;190mlg --setgitpath[00;01m to set \$GITPATH, or run [00;01;38;5;190mlg --help[00;01m for more info"""
+	return
+fi
+if [ -d ./.git ]; then
+	lazygit
+	return
+else
+	echo -en """c
+Unable to launch lazygit in the current directory - Dir is not a git repo
+
+Choose one of the following repos to open with lazygit:
+
+"""
+fi
+builtin cd $GITPATH
+for dirs in *; do
+	GITDIRS=("$dirs" "$GITDIRS[@]")
+done
+unset dirs
+while [ "$init" -le ${#GITDIRS} ]; do
+echo -e "  [00;01;38;5;196m[[00;01m$init[00;01;38;5;196m][m [00;01m"$GITDIRS[$init]"[[m"
+init=$(($init + 1))
+done
+select opt in $GITDIRS; do
+if [ $REPLY = 'Q' ] || [ $REPLY = 'q' ]; then
+	echo QUITING
+	break
+else
+	lazygit -p $opt
+	break
+fi
+done 2>/dev/null
+
+31m hi
